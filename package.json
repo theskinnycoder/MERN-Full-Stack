@@ -1,0 +1,31 @@
+{
+	"name": "express-crash-course",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"start": "cross-env NODE_ENV=production babel-node server",
+		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node server"
+	},
+	"author": {
+		"name": "The Skinny Coder",
+		"email": "18131a0505@gvpce.ac.in"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/cli": "^7.11.6",
+		"@babel/core": "^7.11.6",
+		"@babel/node": "^7.10.5",
+		"@babel/preset-env": "^7.11.5",
+		"cross-env": "^7.0.2",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.4"
+	},
+	"dependencies": {
+		"colors": "^1.4.0",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"moment": "^2.29.1",
+		"mongoose": "^5.10.6"
+	}
+}
