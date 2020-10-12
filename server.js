@@ -16,10 +16,10 @@ const { PORT, NODE_ENV } = process.env;
 	// Initialise the Express Web-App Instance
 	const app = express();
 
-	// Middlewares to use JSON, Encode Forms Data and Logging
-	app.use(json());
-	app.use(urlencoded({ extended: false }));
-	if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+	// Middlewares
+	app.use(json()); // Parse and Stringify JSON
+	app.use(urlencoded({ extended: false })); // EnCode Form Input Data
+	if (process.env.NODE_ENV === 'development') app.use(morgan('dev')); // Logging
 
 	// Blog Routes : Primary Route Hitter
 	app.use('/blog', blogRoutes);
