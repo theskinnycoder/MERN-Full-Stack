@@ -1,5 +1,4 @@
-node_modules/
-.vscode/
-.git/
-config/config.env
-tests/
+/**/node_modules/
+/**/.git/
+/**/*.env
+/**/*.log

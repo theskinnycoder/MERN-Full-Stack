@@ -1,27 +1,21 @@
-import { connect } from 'mongoose';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 // DotENV Module Config
-config({ path: './config/config.env' });
+dotenv.config({ path: './config/config.env' });
 
-// Extract the required variables
-const { MONGO_URI } = process.env;
-
-// Async Connection Function
-const connectDB = async () => {
-	try {
-		const conn = await connect(MONGO_URI, {
-			useNewUrlParser: true,
-			useCreateIndex: true,
-			useUnifiedTopology: true,
-			useFindAndModify: false,
-		});
-		console.log(`MongoDB Connected...${conn.connection.host}`.white.bold);
-	} catch (err) {
-		console.log(`${err}`.red);
-		process.exit(1);
-	}
+// Export the Async Connection Function to call and connect to the DB, before listening for requests
+export default async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    });
+    console.log(`Connected to the MongoDB DataBase ${conn.connection.name}`);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 };
-
-// Export the connection function to call and connect to the DB, before listening for requests
-export default connectDB;

@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Rubik:wght@500&display=swap');
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Rubik';
+}
+
+p {
+  font-family: 'Nunito';
+}

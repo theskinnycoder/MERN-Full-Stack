@@ -1,10 +1,10 @@
 # **MERN-Full-Stack**
 
-> A **MERN** Stack Web-App that enables you to **Create**, **Read**, **Update**, **Delete** blog articles
+> A **MERN** Stack Web-App that enables you to **_Create_**, **_Read_**, **_Update_**, **_Delete_** blog articles
 
 ## **A. Environemnt Variables**
 
-- Create a **`config/config.env`** file in the project root and add the required data
+- Create a **`config.env`** file in the **`config/`** directory and add the required data
 
 ```env
 PORT = 5000
@@ -13,5 +13,29 @@ MONGO_URI = <Your MongoDB Atlas Access Token String>
 
 ## **B. Scripts**
 
-1. **`npm start` or `yarn start`** : Runs the server in production mode with _`node`_
-2. **`npm run dev` or `yarn run dev`** : Runs the server in development mode with _`nodemon`_
+1. Run the whole app in production mode :
+
+```bash
+npm install # yarn
+cd client
+npm install # yarn
+cd ..
+npm start # yarn start
+```
+
+2. Run only the server in development mode :
+
+```bash
+npm run dev # yarn dev
+```
+
+3. Run the whole app in development mode :
+
+```bash
+ # Server :
+ npm run dev # yarn dev
+
+ # Client :
+ cd client
+ npm start # yarn start
+```
