@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const UpdateForm = props => {
-  const { match } = props;
+const UpdateForm = ({ match, history }) => {
   const [article, setArticle] = useState({});
+  const articleID = match.params.id;
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`/blog/${match.params.id}/`);
+      const res = await fetch(`/api/articles/${articleID}/`);
       const { data } = await res.json();
       setArticle(data);
     })();
-  }, [match.params.id]);
+  }, [articleID]);
 
   const [title, setTitle] = useState(article.title);
   const [body, setBody] = useState(article.body);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await fetch(`/blog/${match.params.id}/`, {
+    await fetch(`/api/articles/${articleID}/`, {
       method: 'PATCH',
       body: JSON.stringify({
         title,
@@ -28,7 +28,7 @@ const UpdateForm = props => {
         'Content-Type': 'application/json'
       }
     });
-    props.history.push('/');
+    history.push('/');
   };
 
   return (
@@ -70,4 +70,4 @@ const UpdateForm = props => {
   );
 };
 
-export default withRouter(UpdateForm);
+export default UpdateForm;

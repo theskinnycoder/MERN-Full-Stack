@@ -1,10 +1,6 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-// DotENV Module Config
-dotenv.config({ path: './config/config.env' });
-
-// Export the Async Connection Function to call and connect to the DB, before listening for requests
+// An async connection function : Calls and Connects to the DB, before listening for any requests
 export default async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {

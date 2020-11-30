@@ -1,124 +1,74 @@
-// Import the Article mongoose model for the CRUD operations
 import Article from '../models/Article.js';
+import asyncHandler from 'express-async-handler';
 
-// GET ALL ARTICLES :
-export const getAllArticles = async (_req, res) => {
-  try {
-    const allArticles = await Article.find();
+// GET    /api/articles/
+export const getAllArticles = asyncHandler(async (_, res) => {
+  const allArticles = await Article.find();
 
-    return res.status(200).json({
-      success: true,
-      data: allArticles
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
+  res.json({
+    success: true,
+    data: allArticles
+  });
+});
+
+// GET    /api/articles/:id/:
+export const getArticle = asyncHandler(async (req, res) => {
+  const requiredArticle = await Article.findById(req.params.id);
+
+  if (!requiredArticle) {
+    res.status(404);
+    throw new Error('No Article Found!');
   }
-};
 
-// GET AN ARTICLE BY ID :
-export const getArticle = async (req, res) => {
-  try {
-    const requiredArticle = await Article.findById(req.params.id);
+  res.json({
+    success: true,
+    data: requiredArticle
+  });
+});
 
-    if (!requiredArticle) {
-      return res.status(404).json({
-        success: false,
-        message: 'No Article Found'
-      });
-    }
+// POST    /api/articles/
+export const createArticle = asyncHandler(async (req, res) => {
+  const newArticle = await Article.create(req.body);
 
-    return res.status(200).json({
-      success: true,
-      data: requiredArticle
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
+  res.status(201).json({
+    success: true,
+    message: 'New Article Added!',
+    data: newArticle
+  });
+});
+
+// PATCH    /api/articles/:id/
+export const updateArticle = asyncHandler(async (req, res) => {
+  const updatedArticle = await Article.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  if (!updatedArticle) {
+    res.status(404);
+    throw new Error('No Article Found!');
   }
-};
 
-// CREATE AN ARTICLE :
-export const createArticle = async (req, res) => {
-  try {
-    const newArticle = await Article.create(req.body);
+  res.json({
+    success: true,
+    message: 'Article Updated!',
+    data: updatedArticle._id
+  });
+});
 
-    return res.status(201).json({
-      success: true,
-      message: 'New Article Added!',
-      data: newArticle
-    });
-  } catch (err) {
-    console.error(err);
-    return err.name === 'ValidationError'
-      ? res.status(400).json({
-          success: false,
-          message: Object.values(err.errors).map(error => error.message)
-        })
-      : res.status(500).json({
-          success: false,
-          message: 'Internal Server Error'
-        });
+// DELETE    /api/articles/:id/
+export const deleteArticle = asyncHandler(async (req, res) => {
+  const deletedArticle = await Article.findByIdAndDelete(req.params.id);
+
+  if (!deletedArticle) {
+    res.status(404);
+    throw new Error('No Article Found!');
   }
-};
 
-// UPDATE AN ARTICLE BY ID :
-export const updateArticle = async (req, res) => {
-  try {
-    const updatedArticle = await Article.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true
-      }
-    );
-    if (!updatedArticle) {
-      return res.status(404).json({
-        success: false,
-        message: 'No Article Found'
-      });
-    }
-    return res.status(201).json({
-      success: true,
-      message: 'Article Updated!',
-      data: updatedArticle
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
-  }
-};
-
-// DELETE AN ARTICLE BY ID :
-export const deleteArticle = async (req, res) => {
-  try {
-    const deletedArticle = await Article.findByIdAndDelete(req.params.id);
-
-    if (!deletedArticle) {
-      return res.status(404).json({
-        success: false,
-        message: 'No Article Found'
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: 'Article Deleted!'
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
-  }
-};
+  res.json({
+    success: true,
+    message: 'Article Deleted!',
+    data: deletedArticle._id
+  });
+});

@@ -1,33 +1,33 @@
 import { useEffect, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const ArticleDetail = props => {
-  const { match } = props;
+const ArticleDetail = ({ history, match }) => {
   const [article, setArticle] = useState({});
+  const articleID = match.params.id;
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`/blog/${match.params.id}/`);
+      const res = await fetch(`/api/articles/${articleID}/`);
       const { data } = await res.json();
       setArticle(data);
     })();
-  }, [match.params.id]);
-
-  const deleteHandler = async () => {
-    await fetch(`/blog/${match.params.id}/`, {
-      method: 'DELETE'
-    });
-    props.history.push('/');
-  };
+  }, [articleID]);
 
   const { title, body, createdAt } = article;
+
+  const deleteHandler = async () => {
+    await fetch(`/api/articles/${articleID}/`, {
+      method: 'DELETE'
+    });
+    history.push('/');
+  };
 
   return (
     <>
       <h1>{title}</h1>
       <small>Pulished on {createdAt}</small>
       <p>{body}</p>
-      <Link to={`/${match.params.id}/update/`}>
+      <Link to={`/${articleID}/update/`}>
         <button>
           <i className='material-icons'>create</i>
           <strong>Update</strong>
@@ -42,4 +42,4 @@ const ArticleDetail = props => {
   );
 };
 
-export default withRouter(ArticleDetail);
+export default ArticleDetail;

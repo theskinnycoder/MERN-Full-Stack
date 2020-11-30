@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const InputForm = props => {
+const InputForm = ({ history }) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await fetch('/blog/', {
+    await fetch('/api/articles/', {
       method: 'POST',
       body: JSON.stringify({
         title,
@@ -17,7 +17,7 @@ const InputForm = props => {
         'Content-Type': 'application/json'
       }
     });
-    props.history.push('/');
+    history.push('/');
   };
 
   return (
@@ -57,4 +57,4 @@ const InputForm = props => {
   );
 };
 
-export default withRouter(InputForm);
+export default InputForm;

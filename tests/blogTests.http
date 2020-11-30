@@ -1,5 +1,5 @@
-@baseURL = http://localhost:5000/blog
-@articleID = 5fbecfa412ef9901c4789eab
+@baseURL = http://localhost:5000/api/articles
+@articleID = 5fbed71f3e8e012348c016eb
 
 
 ### GET ALL ARTICLES

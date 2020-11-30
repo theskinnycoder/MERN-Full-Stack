@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import Article from './Article';
+import Article from '../components/Article';
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch('/blog/');
+      const res = await fetch('/api/articles/');
       const { data } = await res.json();
       setArticles(data);
     })();
