@@ -1,16 +1,16 @@
 import moment from 'moment';
 import mongoose from 'mongoose';
 
-// Define a mongoose Schema for the Articles
-const articleSchema = new mongoose.Schema(
+// Define a mongoose Schema for the Rants
+const rantSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Article's title can't be empty"]
+      required: [true, 'Please give a title to your rant...']
     },
     body: {
       type: String,
-      required: [true, "Article's body can't be empty"]
+      required: [true, "You can't leave your rant empty!"]
     },
     createdAt: String,
     updatedAt: String
@@ -22,5 +22,5 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
-// Export the Article mongoose model
-export default mongoose.model('Article', articleSchema);
+// Export the Rant mongoose model
+export default mongoose.model('Rant', rantSchema);

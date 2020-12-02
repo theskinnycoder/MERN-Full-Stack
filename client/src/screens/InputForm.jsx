@@ -1,55 +1,54 @@
+import { useStoreActions } from 'easy-peasy';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const InputForm = ({ history }) => {
+  const createRant = useStoreActions(actions => actions.createRant);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  const handleSubmit = async e => {
+  const submitHandler = e => {
     e.preventDefault();
-    await fetch('/api/articles/', {
-      method: 'POST',
-      body: JSON.stringify({
-        title,
-        body
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    createRant({ title, body });
     history.push('/');
   };
 
   return (
     <>
-      <form method='POST' onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input
-          type='text'
-          placeholder='Enter the article title...'
-          onChange={e => setTitle(e.target.value)}
-        />
+      <form method='POST' onSubmit={submitHandler}>
+        <div className='form-group'>
+          <label htmlFor='title'>Title</label>
+          <input
+            id='title'
+            name='title'
+            type='text'
+            value={title}
+            placeholder="Let fellow ranters know what your rant is 'bout..."
+            onChange={e => setTitle(e.target.value)}
+            className='form-control'
+          />
+        </div>
 
-        <br />
+        <div className='form-group mb-5'>
+          <label htmlFor='body'>Body</label>
+          <textarea
+            id='body'
+            name='body'
+            rows='10'
+            value={body}
+            placeholder="What's your problem?"
+            onChange={e => setBody(e.target.value)}
+            className='form-control'
+          />
+        </div>
 
-        <label>Body</label>
-        <textarea
-          rows='10'
-          placeholder='Enter the article body...'
-          onChange={e => setBody(e.target.value)}
-        />
-
-        <br />
-
-        <button type='submit' className='icon-btn'>
-          <i className='material-icons'>post_add</i>
-          <strong>Submit</strong>
+        <button type='submit' className='btn btn-lg btn-success mr-2'>
+          <i className='fas fa-edit'></i> OK, Rant
         </button>
 
         <Link to='/'>
-          <button>
-            <i className='material-icons'>backspace</i>
-            <strong>Back</strong>
+          <button className='btn btn-secondary ml-2 btn-lg'>
+            <i className='fas fa-arrow-left'></i> NeverMind
           </button>
         </Link>
       </form>

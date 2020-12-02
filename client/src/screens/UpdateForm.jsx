@@ -1,72 +1,66 @@
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const UpdateForm = ({ match, history }) => {
-  const [article, setArticle] = useState({});
-  const articleID = match.params.id;
+  const rantID = match.params.id;
+  const fetchRantByID = useStoreActions(actions => actions.fetchRantByID);
+  const updateRantByID = useStoreActions(actions => actions.updateRantByID);
 
   useEffect(() => {
-    (async () => {
-      const res = await fetch(`/api/articles/${articleID}/`);
-      const { data } = await res.json();
-      setArticle(data);
-    })();
-  }, [articleID]);
+    fetchRantByID({ rantID });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rantID]);
 
-  const [title, setTitle] = useState(article.title);
-  const [body, setBody] = useState(article.body);
+  const rant = useStoreState(state => state.rant);
 
-  const handleSubmit = async e => {
+  const [title, setTitle] = useState(rant.title);
+  const [body, setBody] = useState(rant.body);
+
+  const submitHandler = async e => {
     e.preventDefault();
-    await fetch(`/api/articles/${articleID}/`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        title,
-        body
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    updateRantByID({ title, body, rantID });
     history.push('/');
   };
 
   return (
-    <>
-      <form type='PATCH' onSubmit={handleSubmit}>
-        <label>Title</label>
+    <form type='PATCH' onSubmit={submitHandler}>
+      <div className='form-group'>
+        <label htmlFor='title'>Title</label>
         <input
+          id='title'
+          name='title'
           type='text'
-          defaultValue={article.title}
-          placeholder='Update the article title...'
+          defaultValue={rant.title}
+          placeholder="Let ranters know what your rant is 'bout..."
           onChange={e => setTitle(e.target.value)}
+          className='form-control'
         />
+      </div>
 
-        <br />
-
-        <label>Body</label>
+      <div className='form-group mb-5'>
+        <label htmlFor='title'>Body</label>
         <textarea
+          id='title'
+          name='title'
           rows='10'
-          defaultValue={article.body}
-          placeholder='Update the article body...'
+          defaultValue={rant.body}
+          placeholder="What's your problem?"
           onChange={e => setBody(e.target.value)}
+          className='form-control'
         />
+      </div>
 
-        <br />
+      <button type='submit' className='btn btn-success mr-2 btn-lg'>
+        <i className='fas fa-edit'></i> ReRant
+      </button>
 
-        <button onClick={handleSubmit}>
-          <i className='material-icons'>update</i>
-          <strong>Update</strong>
+      <Link to={`/${rant._id}/`}>
+        <button className='btn btn-secondary ml-2 btn-lg'>
+          <i className='fas fa-arrow-left'></i> NeverMind
         </button>
-
-        <Link to={`/${article._id}/`}>
-          <button>
-            <i className='material-icons'>backspace</i>
-            <strong>Back</strong>
-          </button>
-        </Link>
-      </form>
-    </>
+      </Link>
+    </form>
   );
 };
 

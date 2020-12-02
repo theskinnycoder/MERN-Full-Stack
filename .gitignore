@@ -1,5 +1,7 @@
 /**/node_modules/
 /**/.git/
+/**/build/
+/**/dist/
 /**/*.env
 /**/*.log
 /**/*.error

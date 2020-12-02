@@ -1,12 +1,12 @@
 {
-  "name": "mern-server",
+  "name": "ranterrr-server",
   "version": "1.0.0",
   "type": "module",
   "description": "A Backend using MongoDB, Mongoose, and Express",
   "license": "MIT",
   "main": "server.js",
   "scripts": {
-    "prestart": "npm run build --prefix ../client",
+    "prestart": "npm run build --prefix ./client",
     "start": "cross-env NODE_ENV=production node server",
     "dev": "cross-env NODE_ENV=development nodemon server"
   },

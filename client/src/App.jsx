@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import ArticleDetail from './screens/ArticleDetail';
-import ArticleList from './screens/ArticleList';
+import RantDetail from './screens/RantDetail';
+import RantList from './screens/RantList';
 import InputForm from './screens/InputForm';
 import UpdateForm from './screens/UpdateForm';
 
@@ -9,12 +9,14 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path='/create/' component={InputForm} exact />
-        <Route path='/:id/update/' component={UpdateForm} exact />
-        <Route path='/:id/' component={ArticleDetail} exact />
-        <Route path='/' component={ArticleList} exact />
-      </Switch>
+      <main className='py-3 container'>
+        <Switch>
+          <Route path='/create/' component={InputForm} exact />
+          <Route path='/:id/update/' component={UpdateForm} exact />
+          <Route path='/:id/' component={RantDetail} exact />
+          <Route path='/' component={RantList} exact />
+        </Switch>
+      </main>
     </Router>
   );
 };

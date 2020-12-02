@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
+import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 
 import connectDB from './config/connectDB.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
-import blogRoutes from './routes/blogRoutes.js';
+import rantsRoutes from './routes/rantsRoutes.js';
 
 // DotENV Module Config
 dotenv.config();
@@ -20,14 +21,23 @@ const { PORT, NODE_ENV } = process.env;
   // Initialise the Express Web-App Instance
   const app = express();
 
-  // Express Middlewares for
-  app.use(express.json()); // Parse and Stringify JSON
-  app.use(express.urlencoded({ extended: false })); // Parse and Stringify JSON
-  if (NODE_ENV === 'development') app.use(morgan('dev')); // Logging
+  // Express Middlewares for Body-Parser, JSON, and Logging
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  if (NODE_ENV === 'development') app.use(morgan('dev'));
 
   // Primary Route Hitters
-  // Forward all URLs from /api/articles to blog the controllers
-  app.use('/api/articles', blogRoutes);
+  // Forward all URLs from /api/rants to rant controllers
+  app.use('/api/rants', rantsRoutes);
+
+  // Serve the built React SPA as a static file from the server
+  if (NODE_ENV === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.get('*', (_, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
 
   // Custom Error Handlers
   app.use(notFound);

@@ -1,33 +1,33 @@
-@baseURL = http://localhost:5000/api/articles
-@articleID = 5fbed71f3e8e012348c016eb
+@baseURL = http://localhost:5000/api/rants
+@rantID = 5fc6b54583161b2e10265c7e
 
 
-### GET ALL ARTICLES
+### GET ALL RANTS
 GET {{baseURL}}/ HTTP/1.1
 
 
-### GET AN ARTICLE BY ID
-GET {{baseURL}}/{{articleID}}/ HTTP/1.1
+### GET A RANT BY ID
+GET {{baseURL}}/{{rantID}}/ HTTP/1.1
 
 
-### CREATE AN ARTICLE
+### CREATE A NEW RANT
 POST {{baseURL}}/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "title": "My 1st Article",
-  "body": "1st Article Body"
+  "title": "My 2nd Rant",
+  "body": "2nd Rant Body"
 }
 
 
-### UPDATE AN ARTICLE BY ID
-PATCH {{baseURL}}/{{articleID}}/ HTTP/1.1
+### UPDATE A RANT BY ID
+PATCH {{baseURL}}/{{rantID}}/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "body": "My Updated Article Body"
+  "body": "My Updated Rant Body"
 }
 
 
-### DELETE AN ARTICLE BY ID
-DELETE {{baseURL}}/{{articleID}}/ HTTP/1.1
+### DELETE A RANT BY ID
+DELETE {{baseURL}}/{{rantID}}/ HTTP/1.1

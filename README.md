@@ -1,10 +1,10 @@
-# **MERN-Full-Stack**
+# **Ranterrr (A MERN Full-Stack WebSite)**
 
-> A **MERN** Stack Web-App that enables you to **_Create_**, **_Read_**, **_Update_**, **_Delete_** blog articles
+> A **MERN** Stack Blogging Web-App that enables you to **_Create_**, **_Read_**, **_Update_**, **_Delete_** blog articles
 
 ## **A. Environemnt Variables**
 
-- Create a **`config.env`** file in the **`config/`** directory and add the required data
+- Create a **`.env`** file in the project root directory and add the required data
 
 ```env
 PORT = 5000
@@ -39,3 +39,5 @@ npm run dev # yarn dev
  cd client
  npm start # yarn start
 ```
+
+> Happy coding!
